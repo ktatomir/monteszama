@@ -8,16 +8,17 @@
 		%h2= request.protocol + request.host_with_port + request.fullpath
 	%p
 		The caller is:
-		%b= @caller ? @caller.login : "not choosen yet"
+		%b= @caller ? @caller.login : "not chosen yet"
 		
-		
-= form_for [@order, @item], html: {class: "form-inline"} do |f|
-	= f.hidden_field :user_id, value: github_user.id
-	= f.hidden_field :order_id, value: @order.id
-	= f.text_field :name, placeholder: "Item name"
-	= f.text_field :price, placeholder: "Item price"
-	= f.submit "Order item", class: "btn btn-primary"
-
+- if !@order.closed		
+	%h4 Add item to order
+	= form_for [@order, @item], html: {class: "form-inline"} do |f|
+		= f.hidden_field :user_id, value: github_user.id
+		= f.hidden_field :order_id, value: @order.id
+		= f.text_field :name, placeholder: "Item name"
+		= f.text_field :price, placeholder: "Item price"
+		= f.submit "Order item", class: "btn btn-primary"
+	
 %h2 Items so far:
 %table.table.table-striped
 	%tr
@@ -30,6 +31,24 @@
 			%td= i.name
 			%td= i.price
 			%td= i.login
+
+- if @order.closed
+	- if github_user.id == @order.owner_id
+		%h4 Add payment
+		= form_for [@order, @payment], html: {class: "form-inline"} do |f|
+			= f.select :user_id, options_from_collection_for_select(@order.users, 'id', 'login')
+			= f.hidden_field :order_id, value: @order.id
+			= f.text_field :quant, placeholder: "Payment quantity"
+			= f.submit "Add payment", class: "btn btn-primary"
+	%h2 Who paid how much:
+	%table.table.table-striped
+		%tr
+			%th Login
+			%th Paid
+		- @payments.each do |p|
+			%tr
+				%td= p.login
+				%td= p.quant
 	
 	
 - if github_user.id == @order.owner_id && !@order.closed

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130804213227) do
+ActiveRecord::Schema.define(:version => 20130804214812) do
 
   create_table "items", :force => true do |t|
     t.string   "name",       :null => false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130804213227) do
     t.integer  "order_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.float    "quant",      :null => false
   end
 
   add_index "payments", ["order_id", "user_id"], :name => "index_payments_on_order_id_and_user_id", :unique => true

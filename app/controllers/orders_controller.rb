@@ -14,6 +14,8 @@ class OrdersController < ApplicationController
     @items = @order.items
     @item = Item.new
     @caller = User.find(@order.caller_id) if @order.caller_id
+    @payment = Payment.new
+    @payments = @order.payments
   end
   
   def create

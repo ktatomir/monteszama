@@ -8,5 +8,6 @@ class Item < ActiveRecord::Base
   delegate :desc, to: :order
   
   validates :name, :price, :order_id, :user_id, presence: true
-  validates :order_id, uniqueness: { scope: :user_id }
+  validates :user_id, uniqueness: { scope: :order_id }
+  validates :price, numericality: true, allow_nil: true
 end

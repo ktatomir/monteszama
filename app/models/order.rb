@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   has_one :caller, class_name: "User"
   has_many :items, dependent: :destroy
   has_many :payments, dependent: :destroy
+  has_many :users, through: :items
   
   validates :owner_id, :desc, presence: true
   
