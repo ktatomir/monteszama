@@ -1,6 +1,10 @@
 - if @orders.empty? 
 	There were no orders so far, so there is no history ;)
+	%br
+	= link_to "Create an order", new_order_path, class: "btn btn-primary btn-large"
 - else
 	- @orders.each do |o|
 		%p
-			= o.desc
+			= link_to_if github_user.id == o.owner_id, o.desc, o
+	%br
+	= link_to "Create an order", new_order_path, class: "btn btn-primary btn-large"

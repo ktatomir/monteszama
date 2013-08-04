@@ -1,0 +1,20 @@
+.hero-unit
+	%h1= @order.desc
+	%p
+		Created by 
+		= @order.login
+		%br
+		This order can be always be found at:
+		%h2= request.protocol + request.host_with_port + request.fullpath
+		
+= form_for [@order, @item], html: {class: "form-inline"} do |f|
+	= f.hidden_field :user_id, value: github_user.id
+	= f.hidden_field :order_id, value: @order.id
+	= f.text_field :name, placeholder: "Item name"
+	= f.text_field :price, placeholder: "Item price"
+	= f.submit "Order item", class: "btn btn-primary"
+
+- @items.each do |i|
+	= i.user_id
+	= i.name
+	= i.price

@@ -1,9 +1,10 @@
 Monteszama::Application.routes.draw do
 
   resources :users
-  resources :orders
-  resources :items
-  resources :payments
+  resources :orders do
+    resources :items
+    resources :payments
+  end
    
   root :to => 'orders#index'
 

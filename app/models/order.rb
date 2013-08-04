@@ -8,6 +8,8 @@ class Order < ActiveRecord::Base
   
   validates :owner_id, :desc, presence: true
   
+  delegate :login, to: :owner
+  
   def choose_caller
     users = self.items.collect { |i| i.user_id }
     self.update_attributes(caller_id: users.sample)
