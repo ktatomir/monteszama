@@ -11,8 +11,9 @@ describe Order do
   end
   
   it "should choose random user to call" do
-    user1 = create :user
-    user2 = create :user
+    3.times do
+      item = FactoryGirl.create(:item, :order_id => @order.id)
+    end
     @order.choose_caller
     @order.caller_id.should_not be_nil
   end

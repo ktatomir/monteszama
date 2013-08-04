@@ -4,4 +4,6 @@ class User < ActiveRecord::Base
   has_many :orders
   has_many :items
   has_many :payments
+  
+  validates :login, :email, presence: true
 end
