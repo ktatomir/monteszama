@@ -13,6 +13,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @items = @order.items
     @item = Item.new
+    @caller = User.find(@order.caller_id) if @order.caller_id
   end
   
   def create
@@ -23,6 +24,18 @@ class OrdersController < ApplicationController
     else
       flash[:error] = "There was a problem with creating an order"
       render :new
+    end
+  end
+  
+  def update
+    @order = Order.find(params[:id])
+    if @order.update_attribute(:closed, true)
+      @order.choose_caller
+      flash[:notice] = "Order closed"
+      redirect_to @order
+    else
+      flash[:error] = "Couldn't close the order, sorry :("
+      redirect_to @order
     end
   end
   

@@ -6,6 +6,10 @@
 		%br
 		This order can be always be found at:
 		%h2= request.protocol + request.host_with_port + request.fullpath
+	%p
+		The caller is:
+		%b= @caller ? @caller.login : "not choosen yet"
+		
 		
 = form_for [@order, @item], html: {class: "form-inline"} do |f|
 	= f.hidden_field :user_id, value: github_user.id
@@ -14,7 +18,20 @@
 	= f.text_field :price, placeholder: "Item price"
 	= f.submit "Order item", class: "btn btn-primary"
 
-- @items.each do |i|
-	= i.user_id
-	= i.name
-	= i.price
+%h2 Items so far:
+%table.table.table-striped
+	%tr
+		%th Name
+		%th Price
+		%th Ordered by
+	
+	- @items.each do |i|
+		%tr
+			%td= i.name
+			%td= i.price
+			%td= i.login
+	
+	
+- if github_user.id == @order.owner_id && !@order.closed
+	= form_for @order, method: :put do |f|
+		= f.submit "Close this order", class: "btn btn-primary btn-large"
