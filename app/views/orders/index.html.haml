@@ -1,0 +1,6 @@
+- if @orders.empty? 
+	There were no orders so far, so there is no history ;)
+- else
+	- @orders.each do |o|
+		%p
+			= o.desc

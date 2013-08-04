@@ -1,0 +1,20 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: monteszama
+  pool: 5
+  username: kasia
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: monteszama_test
+  pool: 5
+  username: kasia
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: monteszama_prod
+  pool: 5
+  username: kasia

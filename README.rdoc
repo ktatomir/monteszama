@@ -1,0 +1,66 @@
+= Monteszama
+
+Simple application to improve food ordering process in company full of hungry developers :)
+
+== Requirements/flow:
+* sign in with GitHub account
+* signed in user can add an order (with description like ‘chinese’, ‘pizza’)
+* permalink is generated after creating an order
+* after entering the permalink, one can add only one item (name and price)
+* the order owner can close it (and only him/her)
+* after closing order, a person to call the restaurant is chosen randomly
+* if the order is closed, everyone can see the summary: who order what and for how much
+* orders history is public
+* remember/add who paid and how much
+* tests! rspec/minitest
+* cucumber as super hyper plus
+* layout on bootstrap is enough
+* deployment on heroku
+
+= My idea for the solution
+
+== M is for model
+
+=== Order
+* id (int)
+* desc (string/text)
+* owner_id (int) [index]
+* caller_id (int) [index]
+
+*belongs_to* owner (class user)
+*has_one* caller (class user)
+*has_many* items
+*has_many* payments
+
+=== Item
+* id (int)
+* name (string)
+* price (float)
+* order_id (int) [index]
+* user_id (int) [index]
+
+constraint on order_id, user_id !!!
+
+*belongs_to* order
+*belongs_to* user
+
+=== User
+
+* id (int)
+* login (string)
+* email (string)
+
+*has_many* orders
+*has_many* items
+*has_many* payments
+
+=== Payment
+
+* id (int)
+* order_id (int) [index]
+* user_id (int) [index]
+
+constraint on order_id, user_id
+
+*belongs_to* order
+*belongs_to* user
