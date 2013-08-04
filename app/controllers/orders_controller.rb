@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   before_filter :check_if_logged_in, except: :index
   def index
-    #github_logout
     @orders = Order.all
+    @order = Order.new
   end
   
   def new
@@ -11,6 +11,10 @@ class OrdersController < ApplicationController
   
   def show
     @order = Order.find(params[:id])
+    if @order.closed && (!@order.users.collect {|u| u.id}.include?(github_user.id) || @order.owner_id != github_user.id)
+      flash[:error] = "You don't have permission to see this page"
+      redirect_to :root
+    end
     @items = @order.items
     @item = Item.new
     @caller = User.find(@order.caller_id) if @order.caller_id

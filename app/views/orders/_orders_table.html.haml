@@ -1,0 +1,10 @@
+%table.table.table-striped
+	%tr
+		%th Description
+		%th Created_at
+		%th Closed
+	- orders.each do |o|
+		%tr
+			%td= link_to_if github_user && github_user.id == o.owner_id, o.desc, o
+			%td=l o.created_at, format: :long
+			%td= o.closed

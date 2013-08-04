@@ -1,10 +1,11 @@
 - if @orders.empty? 
 	There were no orders so far, so there is no history ;)
-	%br
-	= link_to "Create an order", new_order_path, class: "btn btn-primary btn-large"
 - else
-	- @orders.each do |o|
-		%p
-			= link_to_if github_user.id == o.owner_id, o.desc, o
-	%br
-	= link_to "Create an order", new_order_path, class: "btn btn-primary btn-large"
+	%h2 Orders
+	.orders_table
+	= render "orders_table", orders: @orders
+
+.new_order(style="display:none")
+	= render "form", order: @order if github_user
+
+= link_to "Create an order", "#", class: "btn btn-primary btn-large", id: "create_order" if github_user
