@@ -1,5 +1,0 @@
-= form_for @user, html: {class: "form-inline"} do |f|
-	= f.hidden_field :id, value: github_user.id
-	= f.text_field :login, placeholder: "Login"
-	= f.text_field :email, placeholder: "Email"
-	= f.submit "Yup, that's me :)", class: "btn btn-primary"

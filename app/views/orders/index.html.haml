@@ -7,5 +7,5 @@
 
 .new_order(style="display:none")
 	= render "form", order: @order if github_user
-
-= link_to "Create an order", "#", class: "btn btn-primary btn-large", id: "create_order" if github_user
+%p
+	= link_to "Create an order", "#", class: "btn btn-primary btn-large", id: "create_order" if github_user

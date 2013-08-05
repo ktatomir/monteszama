@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_filter :check_if_logged_in, except: :index
   def index
+    #github_logout
     @orders = Order.all
     @order = Order.new
   end
