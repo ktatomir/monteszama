@@ -27,9 +27,9 @@ Simple application to improve food ordering process in company full of hungry de
 * owner_id (int) [index]
 * caller_id (int) [index]
 
-*belongs_to* owner (class user)
-*has_one* caller (class user)
-*has_many* items
+*belongs_to* owner (class user),
+*has_one* caller (class user),
+*has_many* items,
 *has_many* payments
 
 === Item
@@ -41,7 +41,7 @@ Simple application to improve food ordering process in company full of hungry de
 
 constraint on order_id, user_id !!!
 
-*belongs_to* order
+*belongs_to* order,
 *belongs_to* user
 
 === User
@@ -50,8 +50,8 @@ constraint on order_id, user_id !!!
 * login (string)
 * email (string)
 
-*has_many* orders
-*has_many* items
+*has_many* orders,
+*has_many* items,
 *has_many* payments
 
 === Payment
@@ -62,5 +62,14 @@ constraint on order_id, user_id !!!
 
 constraint on order_id, user_id
 
-*belongs_to* order
+*belongs_to* order,
 *belongs_to* user
+
+== Some additional informations
+
+* order history is set as root. If user is not logged in, he/she can do nothing but watch (a little creepy choose of words?)
+* user logged in can create new order or enter a link sent by order owner
+* WARNING!: if user is logged in and he/she received link to an closed order, he/she won't be able to view it. Closed orders are so called 'summary' and are available only for users that added item to it (+ order owner can see it of course)
+* payments are added at the end, only owner can add them
+* if order item list is empty and order owner closes it, he/she will be automaticaly choose as caller (I thought it's better that way, but I might be wrong here)
+* test are ummm... not very complicated. I did only model tests, as my Internet connection gives me the creeps and I can barely work with it (hotspoting from phone is not a very good solution)
