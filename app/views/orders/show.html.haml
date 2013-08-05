@@ -20,18 +20,8 @@
 		= f.submit "Order item", class: "btn btn-primary"
 	
 %h2 Items so far:
-%table.table.table-striped
-	%tr
-		%th Name
-		%th Price
-		%th Ordered by
-	
-	- @items.each do |i|
-		%tr
-			%td= i.name
-			%td= i.price
-			%td= i.login
-
+#items_table
+	= render 'items_table', items: @items
 - if @order.closed
 	- if github_user.id == @order.owner_id
 		%h4 Add payment

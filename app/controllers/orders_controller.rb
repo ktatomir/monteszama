@@ -11,8 +11,8 @@ class OrdersController < ApplicationController
   end
   
   def show
-    @order = Order.find(params[:id])
-    if @order.closed && (!@order.users.collect {|u| u.id}.include?(github_user.id) || @order.owner_id != github_user.id)
+    @order = Order.find_by_slug(params[:id])
+    if @order.closed && !@order.users.collect {|u| u.id}.include?(github_user.id) && @order.owner_id != github_user.id
       flash[:error] = "You don't have permission to see this page"
       redirect_to :root
     end
@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   end
   
   def update
-    @order = Order.find(params[:id])
+    @order = Order.find_by_slug(params[:id])
     if @order.update_attribute(:closed, true)
       @order.choose_caller
       flash[:notice] = "Order closed"
@@ -50,6 +50,7 @@ class OrdersController < ApplicationController
   
   def check_if_logged_in
     if !github_authenticated? 
+      flash[:error] = "You have to sign in first."
       redirect_to :root
     end
   end

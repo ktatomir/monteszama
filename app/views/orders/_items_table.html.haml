@@ -1,0 +1,16 @@
+%table.table.table-striped
+	%tr
+		%th Name
+		%th Price
+		%th Ordered by
+	
+	- items.each do |i|
+		%tr
+			%td= i.name
+			%td= i.price
+			%td= i.login
+	- if items.any?
+		%tr(style="color: red")
+			%th
+			%th Summary
+			%th= @items.collect {|m| m.price}.inject{ |sum, i| sum + i }

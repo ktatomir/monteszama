@@ -4,7 +4,11 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'shoulda-matchers'
+require 'warden/github/rails/test_helpers'
+require 'addressable/uri'
 
+ENV['GITHUB_CLIENT_ID']     = '6847be25975b19dead6e'
+ENV['GITHUB_CLIENT_SECRET'] = 'e9edaed773d0f3ff41576420d7d4c71c7ee77a83'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -12,6 +16,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include Warden::GitHub::Rails::TestHelpers
+  
+  config.after { Warden.test_reset! }
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
